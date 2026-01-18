@@ -67,3 +67,54 @@ As regras são definidas com CASL e aplicadas conforme o papel do usuário na or
 ---
 
 Feito com ❤️ para acelerar o desenvolvimento de SaaS multi-tenant com uma base sólida e opinada, pronta para personalização.
+
+## Como executar localmente 🧪
+
+### 1) Pré-requisitos
+
+- Node.js 18+ e pnpm
+- PostgreSQL rodando localmente
+
+### 2) Variáveis de ambiente
+
+- Copie `.env.example` para `.env` na raiz e ajuste valores:
+  - DATABASE_URL, JWT_SECRET, GITHUB_OAUTH_CLIENT_ID, GITHUB_OAUTH_CLIENT_SECRET, GITHUB_OAUTH_CLIENT_REDIRECT_URI, NEXT_PUBLIC_API_URL
+
+### 3) Instalar dependências
+
+```bash
+pnpm install -r
+```
+
+### 4) Banco de dados (com Docker) 🐳
+
+```bash
+docker compose up -d
+pnpm db:migrate
+pnpm db:studio
+```
+
+Se preferir usar um Postgres local, garanta que a `DATABASE_URL` aponte para seu servidor.
+
+### 5) Subir API e Web juntos
+
+```bash
+pnpm dev:stack
+```
+
+- API: http://localhost:3333 (docs em `/docs`)
+- Web: http://localhost:3000 (ou 3001/3002 se portas ocupadas)
+
+### 6) Comandos úteis
+
+- Subir apenas API: `pnpm dev:api`
+- Subir apenas Web: `pnpm dev:web`
+- Build Web: `pnpm build:web`
+- Build API: `pnpm build:api`
+
+### Troubleshooting 🛠️
+
+- Erro de módulo não encontrado (Next.js): reinstale dependências e confirme caminhos de import.
+- Variáveis de ambiente ausentes: use `pnpm --filter @saas/web env:load next build` para validar e ajuste `.env`.
+- Docker no Windows: inicie o Docker Desktop antes do `docker compose up -d`.
+- Prisma CLI falhando com Node muito novo: use Node 20 LTS para evitar incompatibilidades.

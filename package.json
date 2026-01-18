@@ -4,7 +4,16 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "turbo lint"
+    "lint": "turbo lint",
+    "dev:web": "pnpm --filter @saas/web env:load next dev",
+    "dev:api": "pnpm --filter @saas/api dev",
+    "dev:stack": "turbo run dev --parallel --filter @saas/api --filter @saas/web",
+    "build:web": "pnpm --filter @saas/web env:load next build",
+    "build:api": "pnpm --filter @saas/api build",
+    "start:web": "pnpm --filter @saas/web start",
+    "start:api": "pnpm --filter @saas/api start",
+    "db:migrate": "pnpm --filter @saas/api env:load prisma migrate dev",
+    "db:studio": "pnpm --filter @saas/api env:load prisma studio"
   },
   "devDependencies": {
     "turbo": "latest"
